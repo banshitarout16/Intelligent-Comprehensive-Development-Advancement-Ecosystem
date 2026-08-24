@@ -1,5 +1,7 @@
 ## Intelligent Comprehensive Development & Advancement Ecosystem
 
+![System Architecture](docs/Architecture.png)
+
 ## Setup
 
 ### 1. Backend
