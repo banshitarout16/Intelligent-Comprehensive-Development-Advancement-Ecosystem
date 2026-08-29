@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+
 const QUOTES = [
   {
     text: "Success is where preparation and opportunity meet.",
@@ -56,13 +57,13 @@ const RotatingQuote = () => {
     >
       <Typography
         variant="h6"
-        sx={{ color: "#FFFFFF", fontWeight: 600, lineHeight: 1.4 }}
+        sx={{ color: "#14140F", fontWeight: 700, lineHeight: 1.4 }}
       >
         "{quote.text}"
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "rgba(255,255,255,0.55)", mt: 1 }}
+        sx={{ color: "rgba(20,20,15,0.6)", mt: 1, fontWeight: 600 }}
       >
         — {quote.author}
       </Typography>
@@ -70,130 +71,37 @@ const RotatingQuote = () => {
   );
 };
 
-const WavePanel = () => (
+const BrandPanel = () => (
   <Box
     sx={{
-      position: "relative",
       height: "100%",
-      overflow: "hidden",
-      bgcolor: "text.primary", // ink
+      bgcolor: "primary.main",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      p: 6,
     }}
   >
-    <svg
-      viewBox="0 0 500 900"
-      preserveAspectRatio="xMidYMid slice"
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-    >
-      <defs>
-        <pattern
-          id="linePattern"
-          width="26"
-          height="26"
-          patternUnits="userSpaceOnUse"
-        >
-          <line
-            x1="0"
-            y1="26"
-            x2="26"
-            y2="0"
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth="1"
-          />
-        </pattern>
-        <radialGradient id="glow" cx="30%" cy="15%" r="60%">
-          <stop offset="0%" stopColor="#FFCC00" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#FFCC00" stopOpacity="0" />
-        </radialGradient>
-        <filter id="grain">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.85"
-            numOctaves="2"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <filter id="softBlur">
-          <feGaussianBlur stdDeviation="18" />
-        </filter>
-      </defs>
-
-      <rect width="500" height="900" fill="#14140F" />
-      <rect width="500" height="900" fill="url(#glow)" />
-
-      <g filter="url(#softBlur)" opacity="0.7">
-        <path
-          d="M0 0 H180 C260 120 100 220 190 340 C270 440 90 560 200 680 C270 760 120 840 190 900 H0 Z"
-          fill="#1F1F1A"
-        />
-      </g>
-      <path
-        d="M0 0 H180 C260 120 100 220 190 340 C270 440 90 560 200 680 C270 760 120 840 190 900 H0 Z"
-        fill="#1F1F1A"
-      />
-      <path
-        d="M0 60 H120 C190 160 60 260 140 380 C210 480 50 600 150 720 C210 800 80 860 140 900 H0 Z"
-        fill="#FFCC00"
-        opacity="0.9"
-      />
-      <path
-        d="M0 140 H70 C120 220 40 300 90 400 C130 480 30 600 90 700 C120 780 50 840 80 900 H0 Z"
-        fill="#14140F"
-        opacity="0.55"
-      />
-
-      <rect width="500" height="900" fill="url(#linePattern)" />
-      <line
-        x1="220"
-        y1="0"
-        x2="220"
-        y2="900"
-        stroke="rgba(255,255,255,0.08)"
-        strokeWidth="1"
-      />
-      <line
-        x1="320"
-        y1="0"
-        x2="320"
-        y2="900"
-        stroke="rgba(255,255,255,0.05)"
-        strokeWidth="1"
-      />
-      <line
-        x1="420"
-        y1="0"
-        x2="420"
-        y2="900"
-        stroke="rgba(255,255,255,0.05)"
-        strokeWidth="1"
-      />
-
-      <rect width="500" height="900" filter="url(#grain)" opacity="0.05" />
-    </svg>
-
-    <Box
+    <Typography
+      variant="overline"
       sx={{
-        position: "relative",
-        zIndex: 1,
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        p: 5,
+        color: "rgba(20,20,15,0.6)",
+        fontWeight: 700,
+        letterSpacing: "0.08em",
       }}
-    >
-      <RotatingQuote />
+    ></Typography>
 
-      <Box sx={{ maxWidth: 320 }}>
-        <Typography variant="h4" sx={{ color: "#FFFFFF", mb: 1.5 }}>
-          Your career prep, in one place.
-        </Typography>
-        <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.7)" }}>
-          Resume analysis, AI-driven mock interviews, and coding practice —
-          built to get you hired.
-        </Typography>
-      </Box>
+    <Box sx={{ maxWidth: 380 }}>
+      <Typography variant="h3" sx={{ color: "#14140F", mb: 2 }}>
+        Your career prep, in one place.
+      </Typography>
+      <Typography variant="body1" sx={{ color: "rgba(20,20,15,0.75)" }}>
+        Resume analysis, AI-driven mock interviews, and coding practice — built
+        to get you hired.
+      </Typography>
     </Box>
+
+    <RotatingQuote />
   </Box>
 );
 
@@ -201,15 +109,16 @@ const AuthLayout = ({ children }) => (
   <Box
     sx={{
       display: "grid",
-      gridTemplateColumns: { xs: "1fr", md: "minmax(0, 4fr) minmax(0, 8fr)" },
+      gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
       minHeight: "calc(100vh - 64px)",
     }}
   >
     <Box sx={{ display: { xs: "none", md: "block" } }}>
-      <WavePanel />
+      <BrandPanel />
     </Box>
     <Box
       sx={{
+        bgcolor: "#14140F",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
