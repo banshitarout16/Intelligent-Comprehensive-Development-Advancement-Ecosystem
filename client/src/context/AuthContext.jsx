@@ -57,9 +57,6 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = (updated) => setUser(updated);
 
-  // Guest mode: lets someone explore the dashboard without creating an
-  // account. It's session-only (cleared on tab close) and never touches
-  // the backend - it's purely a frontend affordance for browsing.
   const continueAsGuest = () => {
     sessionStorage.setItem(GUEST_KEY, "true");
     setIsGuest(true);

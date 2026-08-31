@@ -4,7 +4,7 @@ import { protect } from "../middleware/auth.js";
 
 const router = Router();
 
-router.use(protect); // all routes below require authentication
+router.use(protect); 
 
 router.get("/profile", getProfile);
 router.put("/profile", updateProfile);
