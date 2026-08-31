@@ -1,17 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
-// PrepVerse design tokens
-// Palette: bold yellow accent on a white canvas, near-black text for contrast,
-// a single dark neutral for secondary actions, and quiet greys for structure.
+
 const tokens = {
-  yellow: "#FFCC00", // primary brand / accent
-  yellowDark: "#E6B800", // hover/active state for yellow surfaces
-  ink: "#14140F", // primary text - warm black, not pure #000
-  charcoal: "#1F1F1A", // secondary actions / dark surfaces
+  yellow: "#FFCC00",
+  yellowDark: "#E6B800", 
+  ink: "#14140F", 
+  charcoal: "#1F1F1A", 
   paper: "#FFFFFF",
   canvas: "#FFFFFF",
-  line: "#EAE7DD", // warm hairline border, not cold grey
-  muted: "#6B6A62", // secondary text
+  line: "#EAE7DD",
+  muted: "#6B6A62", 
   success: "#1E8E3E",
   error: "#D93025",
 };
@@ -22,7 +20,7 @@ const theme = createTheme({
     primary: {
       main: tokens.yellow,
       dark: tokens.yellowDark,
-      contrastText: tokens.ink, // yellow buttons get dark text, not white
+      contrastText: tokens.ink, 
     },
     secondary: {
       main: tokens.charcoal,
@@ -63,12 +61,7 @@ const theme = createTheme({
           outline: `3px solid ${tokens.yellow}`,
           outlineOffset: "2px",
         },
-        // Chrome/Edge autofill sets its own background + doesn't trigger React's
-        // change event, so MUI's floating label never shrinks - causing the
-        // label to render on top of the autofilled value. Force a matching
-        // background and long transition delay to neutralise the autofill
-        // paint, and pair with InputLabelProps={{ shrink: true }} on fields
-        // that are commonly autofilled (email, password).
+     
         "input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus": {
           WebkitTextFillColor: tokens.ink,
           WebkitBoxShadow: `0 0 0 1000px ${tokens.paper} inset`,

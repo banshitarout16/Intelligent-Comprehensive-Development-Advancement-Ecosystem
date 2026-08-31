@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
-// Verifies JWT (from httpOnly cookie or Authorization header) and attaches req.user
 export const protect = async (req, res, next) => {
   try {
     let token;
@@ -30,7 +28,7 @@ export const protect = async (req, res, next) => {
   }
 };
 
-// Restricts access to specific roles, e.g. authorize("admin")
+// Restricts access to specific roles, authorize("admin")
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
