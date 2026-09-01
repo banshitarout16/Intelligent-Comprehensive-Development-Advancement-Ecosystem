@@ -1,14 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Avatar,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -39,12 +29,7 @@ const Navbar = () => {
         <Box
           component={Link}
           to="/"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            textDecoration: "none",
-          }}
+          sx={{ display: "flex", alignItems: "center", gap: 1, textDecoration: "none" }}
         >
           <Box
             sx={{
@@ -54,33 +39,28 @@ const Navbar = () => {
               bgcolor: "primary.main",
             }}
           />
-          <Typography
-            variant="h6"
-            sx={{ color: "text.primary", fontWeight: 800 }}
-          >
+          <Typography variant="h6" sx={{ color: "text.primary", fontWeight: 800 }}>
             PrepVerse
           </Typography>
         </Box>
 
         {user ? (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Button
-              component={Link}
-              to="/dashboard"
-              sx={{ color: "text.primary" }}
-            >
+            <Button component={Link} to="/dashboard" sx={{ color: "text.primary" }}>
               Dashboard
+            </Button>
+            <Button component={Link} to="/resume" sx={{ color: "text.primary" }}>
+              Resume
+            </Button>
+            <Button component={Link} to="/interview" sx={{ color: "text.primary" }}>
+              Interview
             </Button>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Avatar sx={{ width: 32, height: 32, bgcolor: "primary.main" }}>
                 {user.name?.[0]?.toUpperCase()}
               </Avatar>
             </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
-            >
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
               <MenuItem
                 onClick={() => {
                   setAnchorEl(null);
@@ -88,6 +68,14 @@ const Navbar = () => {
                 }}
               >
                 Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setAnchorEl(null);
+                  navigate("/interviews");
+                }}
+              >
+                Interview History
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
@@ -97,12 +85,7 @@ const Navbar = () => {
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               Browsing as guest
             </Typography>
-            <Button
-              component={Link}
-              to="/register"
-              variant="contained"
-              color="primary"
-            >
+            <Button component={Link} to="/register" variant="contained" color="primary">
               Sign Up
             </Button>
             <Button onClick={handleExitGuest} sx={{ color: "text.primary" }}>
@@ -111,21 +94,13 @@ const Navbar = () => {
           </Box>
         ) : (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Button
-              onClick={handleContinueAsGuest}
-              sx={{ color: "text.secondary" }}
-            >
+            <Button onClick={handleContinueAsGuest} sx={{ color: "text.secondary" }}>
               Continue without login
             </Button>
             <Button component={Link} to="/login" sx={{ color: "text.primary" }}>
               Login
             </Button>
-            <Button
-              component={Link}
-              to="/register"
-              variant="contained"
-              color="primary"
-            >
+            <Button component={Link} to="/register" variant="contained" color="primary">
               Sign Up
             </Button>
           </Box>
