@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getLatestResume } from "../api/resume.js";
 import { listInterviews } from "../api/interview.js";
+import { listCodingSessions } from "../api/codingApi.js";
 
 const StatCard = ({ title, value, to }) => {
   const content = (
@@ -34,6 +35,8 @@ const Dashboard = () => {
   const [loadingResume, setLoadingResume] = useState(!isGuest);
   const [interviews, setInterviews] = useState([]);
   const [loadingInterviews, setLoadingInterviews] = useState(!isGuest);
+  const [codingSessions, setCodingSessions] = useState([]);
+  const [loadingCoding, setLoadingCoding] = useState(!isGuest);
 
   useEffect(() => {
     if (isGuest) return;
@@ -45,6 +48,10 @@ const Dashboard = () => {
       .then(setInterviews)
       .catch(() => setInterviews([]))
       .finally(() => setLoadingInterviews(false));
+    listCodingSessions()
+      .then(setCodingSessions)
+      .catch(() => setCodingSessions([]))
+      .finally(() => setLoadingCoding(false));
   }, [isGuest]);
 
   const resumeScoreValue = () => {
@@ -65,13 +72,19 @@ const Dashboard = () => {
   const avgInterviewScoreValue = () => {
     if (isGuest || loadingInterviews) return null;
     if (completedInterviews.length === 0) return null;
-    const avg = Math.round(
+    return Math.round(
       completedInterviews.reduce((sum, i) => sum + (i.overallScore || 0), 0) / completedInterviews.length
     );
-    return avg;
   };
 
   const avgScore = avgInterviewScoreValue();
+
+  const solvedProblems = codingSessions.filter((s) => s.status === "solved");
+  const codingSolvedValue = () => {
+    if (isGuest) return "—";
+    if (loadingCoding) return "…";
+    return solvedProblems.length;
+  };
 
   return (
     <Box sx={{ maxWidth: 1100, mx: "auto", px: 3, py: 4 }}>
@@ -116,7 +129,7 @@ const Dashboard = () => {
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <StatCard title="Coding Problems Solved" value="0" />
+          <StatCard title="Coding Problems Solved" value={codingSolvedValue()} to="/coding-history" />
         </Grid>
       </Grid>
 
@@ -125,17 +138,23 @@ const Dashboard = () => {
           Getting started
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Upload your resume for an AI-driven ATS score, or start a mock interview personalized to
-          your target role. Coding practice will appear here in the next branch
-          (feature/ai-assistant-coding).
+          Upload your resume for an AI-driven ATS score, start a mock interview personalized to
+          your target role, practice a coding problem with instant AI review, or ask the AI
+          assistant a career question.
         </Typography>
         {!isGuest && (
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
             <Button component={Link} to="/resume" variant="contained">
               {latestResume ? "View resume analysis" : "Analyze your resume"}
             </Button>
             <Button component={Link} to="/interview" variant="outlined">
               Start a mock interview
+            </Button>
+            <Button component={Link} to="/coding" variant="outlined">
+              Practice a coding problem
+            </Button>
+            <Button component={Link} to="/chat" variant="outlined">
+              Ask AI a question
             </Button>
           </Box>
         )}
