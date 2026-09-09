@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
+import codingRoutes from "./routes/codingRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -37,6 +39,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/resumes", resumeRoutes);
 app.use("/api/interviews", interviewRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/coding", codingRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

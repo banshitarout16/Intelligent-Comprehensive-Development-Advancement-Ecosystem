@@ -10,6 +10,10 @@ import ResumeAnalysis from "./pages/ResumeAnalysis.jsx";
 import InterviewSetup from "./pages/InterviewSetup.jsx";
 import InterviewSession from "./pages/InterviewSession.jsx";
 import InterviewHistory from "./pages/InterviewHistory.jsx";
+import AskMeAnything from "./pages/AskMeAnything.jsx";
+import CodingSetup from "./pages/CodingSetup.jsx";
+import CodingPractice from "./pages/CodingPractice.jsx";
+import CodingHistory from "./pages/CodingHistory.jsx";
 
 function App() {
   return (
@@ -26,6 +30,11 @@ function App() {
             <Route path="/interview" element={<InterviewSetup />} />
             <Route path="/interview/:id" element={<InterviewSession />} />
             <Route path="/interviews" element={<InterviewHistory />} />
+            <Route path="/chat" element={<AskMeAnything />} />
+            <Route path="/chat/:id" element={<AskMeAnything />} />
+            <Route path="/coding" element={<CodingSetup />} />
+            <Route path="/coding/:id" element={<CodingPractice />} />
+            <Route path="/coding-history" element={<CodingHistory />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

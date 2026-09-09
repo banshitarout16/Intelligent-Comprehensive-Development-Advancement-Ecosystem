@@ -55,6 +55,12 @@ const Navbar = () => {
             <Button component={Link} to="/interview" sx={{ color: "text.primary" }}>
               Interview
             </Button>
+            <Button component={Link} to="/chat" sx={{ color: "text.primary" }}>
+              Ask AI
+            </Button>
+            <Button component={Link} to="/coding" sx={{ color: "text.primary" }}>
+              Coding
+            </Button>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Avatar sx={{ width: 32, height: 32, bgcolor: "primary.main" }}>
                 {user.name?.[0]?.toUpperCase()}
@@ -76,6 +82,14 @@ const Navbar = () => {
                 }}
               >
                 Interview History
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setAnchorEl(null);
+                  navigate("/coding-history");
+                }}
+              >
+                Coding History
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
