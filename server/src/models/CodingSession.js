@@ -36,7 +36,7 @@ const codingSessionSchema = new mongoose.Schema(
     difficulty: { type: Number, min: 1, max: 5, required: true },
     language: { type: String, required: true },
     title: { type: String, required: true },
-    problemStatement: { type: String, required: true },
+    problemStatement: { type: String, default: "" },
     examples: [exampleSchema],
     constraints: [{ type: String }],
     starterCode: { type: String, default: "" },

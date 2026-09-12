@@ -1,14 +1,51 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography, Paper, TextField, MenuItem, Slider, Button, Alert, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  TextField,
+  MenuItem,
+  Slider,
+  Button,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import { getLanguages, createCodingProblem } from "../api/codingApi.js";
 
-const DIFFICULTY_LABELS = { 1: "Easy", 2: "Basic", 3: "Moderate", 4: "Hard", 5: "Expert" };
+const DIFFICULTY_LABELS = {
+  1: "Easy",
+  2: "Basic",
+  3: "Moderate",
+  4: "Hard",
+  5: "Expert",
+};
+
+const TOPICS = [
+  { value: "", label: "Mixed / Any topic" },
+  { value: "arrays", label: "Arrays" },
+  { value: "strings", label: "Strings" },
+  { value: "linked lists", label: "Linked Lists" },
+  { value: "stacks and queues", label: "Stacks & Queues" },
+  { value: "trees", label: "Trees" },
+  { value: "graphs", label: "Graphs" },
+  { value: "recursion", label: "Recursion" },
+  { value: "dynamic programming", label: "Dynamic Programming" },
+  { value: "sorting and searching", label: "Sorting & Searching" },
+  { value: "hashing", label: "Hashing" },
+  { value: "greedy algorithms", label: "Greedy Algorithms" },
+  { value: "bit manipulation", label: "Bit Manipulation" },
+  { value: "math", label: "Math" },
+];
 
 const CodingSetup = () => {
   const navigate = useNavigate();
   const [languages, setLanguages] = useState([]);
-  const [form, setForm] = useState({ topic: "", difficulty: 3, language: "python" });
+  const [form, setForm] = useState({
+    topic: "",
+    difficulty: 3,
+    language: "python",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -26,7 +63,10 @@ const CodingSetup = () => {
       const session = await createCodingProblem(form);
       navigate(`/coding/${session._id}`);
     } catch (err) {
-      setError(err.response?.data?.message || "Couldn't generate a problem. Please try again.");
+      setError(
+        err.response?.data?.message ||
+          "Couldn't generate a problem. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -38,8 +78,8 @@ const CodingSetup = () => {
         Coding Practice
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Get an AI-generated coding problem, write your solution, run it, and get an AI code
-        review with complexity analysis.
+        Get an AI-generated coding problem, write your solution, run it, and get
+        an AI code review with complexity analysis.
       </Typography>
 
       <Paper sx={{ p: 4 }} elevation={1}>
@@ -49,14 +89,23 @@ const CodingSetup = () => {
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
           <TextField
+            select
             label="Topic"
-            placeholder="e.g. arrays, recursion, dynamic programming (leave blank for a random topic)"
             value={form.topic}
             onChange={(e) => setForm({ ...form, topic: e.target.value })}
-            InputLabelProps={{ shrink: true }}
-          />
+          >
+            {TOPICS.map((t) => (
+              <MenuItem key={t.value} value={t.value}>
+                {t.label}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <TextField
             select
@@ -86,10 +135,18 @@ const CodingSetup = () => {
             />
           </Box>
 
-          <Button type="submit" variant="contained" size="large" disabled={loading}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={loading}
+          >
             {loading ? (
               <>
-                <CircularProgress size={20} sx={{ mr: 1.5, color: "inherit" }} />
+                <CircularProgress
+                  size={20}
+                  sx={{ mr: 1.5, color: "inherit" }}
+                />
                 Generating problem...
               </>
             ) : (

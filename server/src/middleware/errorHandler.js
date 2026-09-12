@@ -1,4 +1,4 @@
-// Central error handler -> keep this as the last middleware in index.js
+
 export const notFound = (req, res, next) => {
   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
 };

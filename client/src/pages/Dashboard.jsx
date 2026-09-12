@@ -1,15 +1,58 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Paper, Typography, Card, CardContent, Avatar, Button, Alert } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  Card,
+  CardContent,
+  Avatar,
+  Button,
+  Alert,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getLatestResume } from "../api/resume.js";
 import { listInterviews } from "../api/interview.js";
 import { listCodingSessions } from "../api/codingApi.js";
+import RotatingQuote from "../components/RotatingQuote.jsx";
 
-const StatCard = ({ title, value, to }) => {
+const StatCard = ({ title, value, to, icon }) => {
   const content = (
-    <Card sx={{ height: "100%", position: "relative", overflow: "hidden" }} elevation={1}>
-      <Box sx={{ position: "absolute", top: 0, left: 0, width: 6, height: "100%", bgcolor: "primary.main" }} />
+    <Card
+      sx={{ height: "100%", position: "relative", overflow: "hidden" }}
+      elevation={1}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 6,
+          height: "100%",
+          bgcolor: "primary.main",
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          bgcolor: "rgba(255,204,0,0.16)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {icon}
+      </Box>
       <CardContent sx={{ pl: 3.5 }}>
         <Typography variant="body2" color="text.secondary">
           {title}
@@ -23,7 +66,11 @@ const StatCard = ({ title, value, to }) => {
 
   if (!to) return content;
   return (
-    <Box component={Link} to={to} sx={{ textDecoration: "none", display: "block", height: "100%" }}>
+    <Box
+      component={Link}
+      to={to}
+      sx={{ textDecoration: "none", display: "block", height: "100%" }}
+    >
       {content}
     </Box>
   );
@@ -61,7 +108,9 @@ const Dashboard = () => {
     return latestResume.atsScore;
   };
 
-  const completedInterviews = interviews.filter((i) => i.status === "completed");
+  const completedInterviews = interviews.filter(
+    (i) => i.status === "completed",
+  );
 
   const interviewsCompletedValue = () => {
     if (isGuest) return "—";
@@ -73,7 +122,8 @@ const Dashboard = () => {
     if (isGuest || loadingInterviews) return null;
     if (completedInterviews.length === 0) return null;
     return Math.round(
-      completedInterviews.reduce((sum, i) => sum + (i.overallScore || 0), 0) / completedInterviews.length
+      completedInterviews.reduce((sum, i) => sum + (i.overallScore || 0), 0) /
+        completedInterviews.length,
     );
   };
 
@@ -92,24 +142,40 @@ const Dashboard = () => {
         <Alert
           severity="warning"
           icon={false}
-          sx={{ mb: 3, bgcolor: "#FFF7D6", border: "1px solid #EAE7DD", color: "text.primary" }}
+          sx={{
+            mb: 3,
+            bgcolor: "#FFF7D6",
+            border: "1px solid #EAE7DD",
+            color: "text.primary",
+          }}
           action={
-            <Button component={Link} to="/register" variant="contained" color="primary" size="small">
+            <Button
+              component={Link}
+              to="/register"
+              variant="contained"
+              color="primary"
+              size="small"
+            >
               Sign Up
             </Button>
           }
         >
-          You're exploring PrepVerse as a guest — create a free account to save your progress.
+          You're exploring PrepVerse as a guest — create a free account to save
+          your progress.
         </Alert>
       )}
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
-        <Avatar sx={{ width: 56, height: 56, bgcolor: "primary.main", fontSize: 24 }}>
+        <Avatar
+          sx={{ width: 56, height: 56, bgcolor: "primary.main", fontSize: 24 }}
+        >
           {isGuest ? "G" : user?.name?.[0]?.toUpperCase()}
         </Avatar>
         <Box>
           <Typography variant="h4">
-            {isGuest ? "Welcome, guest" : `Welcome back, ${user?.name?.split(" ")[0]}`}
+            {isGuest
+              ? "Welcome, guest"
+              : `Welcome back, ${user?.name?.split(" ")[0]}`}
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Here's an overview of your career prep journey.
@@ -119,17 +185,36 @@ const Dashboard = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
-          <StatCard title="Resume Score" value={resumeScoreValue()} to="/resume" />
-        </Grid>
-        <Grid item xs={12} sm={4}>
           <StatCard
-            title={avgScore !== null ? "Interviews Completed (avg score)" : "Interviews Completed"}
-            value={avgScore !== null ? `${interviewsCompletedValue()} (${avgScore})` : interviewsCompletedValue()}
-            to="/interviews"
+            title="Resume Score"
+            value={resumeScoreValue()}
+            to="/resume"
+            icon={<DescriptionOutlinedIcon sx={{ color: "text.primary" }} />}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <StatCard title="Coding Problems Solved" value={codingSolvedValue()} to="/coding-history" />
+          <StatCard
+            title={
+              avgScore !== null
+                ? "Interviews Completed (avg score)"
+                : "Interviews Completed"
+            }
+            value={
+              avgScore !== null
+                ? `${interviewsCompletedValue()} (${avgScore})`
+                : interviewsCompletedValue()
+            }
+            to="/interviews"
+            icon={<BarChartOutlinedIcon sx={{ color: "text.primary" }} />}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <StatCard
+            title="Coding Problems Solved"
+            value={codingSolvedValue()}
+            to="/coding-history"
+            icon={<CodeOutlinedIcon sx={{ color: "text.primary" }} />}
+          />
         </Grid>
       </Grid>
 
@@ -138,13 +223,18 @@ const Dashboard = () => {
           Getting started
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Upload your resume for an AI-driven ATS score, start a mock interview personalized to
-          your target role, practice a coding problem with instant AI review, or ask the AI
-          assistant a career question.
+          Upload your resume for an AI-driven ATS score, start a mock interview
+          personalized to your target role, practice a coding problem with
+          instant AI review, or ask the AI assistant a career question.
         </Typography>
         {!isGuest && (
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-            <Button component={Link} to="/resume" variant="contained">
+            <Button
+              component={Link}
+              to="/resume"
+              variant="contained"
+              endIcon={<ArrowForwardIcon />}
+            >
               {latestResume ? "View resume analysis" : "Analyze your resume"}
             </Button>
             <Button component={Link} to="/interview" variant="outlined">
@@ -159,6 +249,10 @@ const Dashboard = () => {
           </Box>
         )}
       </Paper>
+
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5, mb: 2 }}>
+        <RotatingQuote variant="light" align="center" />
+      </Box>
     </Box>
   );
 };
