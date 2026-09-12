@@ -3,13 +3,14 @@ import { createTheme } from "@mui/material/styles";
 
 const tokens = {
   yellow: "#FFCC00",
-  yellowDark: "#E6B800", 
-  ink: "#14140F", 
-  charcoal: "#1F1F1A", 
+  yellowDark: "#E6B800",
+  yellowTint: "rgba(255, 204, 0, 0.16)",
+  ink: "#14140F",
+  charcoal: "#1F1F1A",
   paper: "#FFFFFF",
-  canvas: "#FFFFFF",
+  canvas: "#FDF3D4",
   line: "#EAE7DD",
-  muted: "#6B6A62", 
+  muted: "#6B6A62",
   success: "#1E8E3E",
   error: "#D93025",
 };
@@ -39,7 +40,7 @@ const theme = createTheme({
     divider: tokens.line,
   },
   shape: {
-    borderRadius: 14,
+    borderRadius: 18,
   },
   typography: {
     fontFamily: `"Manrope", "Inter", "Helvetica", "Arial", sans-serif`,

@@ -28,7 +28,7 @@ export const protect = async (req, res, next) => {
   }
 };
 
-// Restricts access to specific roles, authorize("admin")
+
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
